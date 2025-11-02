@@ -61,6 +61,26 @@ export type Spellcasting = {
   domain: string;
   spellAttack: number | "";
 };
+export type WeaponRow = {
+  name: string;
+  type?: string;
+  dmg?: string;
+  bonus?: string;
+  reach?: string;
+  ability?: string; // from "Ability modifier"
+  starting?: string; // from "Starting?"
+};
+
+export type ArmorRow = {
+  name: string;
+  type?: string; // Light / Medium / Heavy / Shield
+  acBonus?: string; // from "AC bonus"
+  costGp?: string; // from "Cost (GP)"
+  penalty?: string; // from "Penalty"
+  property?: string; // from "Property"
+  requirements?: string; // from "Requirements"
+  starting?: string; // from "Starting?"
+};
 
 export type EquipRow = { name: string; description: string };
 
@@ -93,6 +113,8 @@ export type Character = {
   };
   spells: SpellRow[];
   talents: TalentRow[];
+  weapons: WeaponRow[];
+  armors: ArmorRow[];
   equipment: EquipRow[];
   desc: {
     area: string;

@@ -2,15 +2,21 @@
 import racesJson from "../data/races.json";
 import talentsJson from "../data/talents.json";
 import spellsJson from "../data/spells.json";
+import weaponsJson from "../data/weapons.json";
+import armorsJson from "../data/armors.json";
 
 export type AnyRec = Record<string, any>;
 export type RaceRec = AnyRec;
 export type TalentRec = AnyRec;
 export type SpellRec = AnyRec;
+export type WeaponRec = AnyRec;
+export type ArmorRec = AnyRec;
 
 export const races = racesJson as RaceRec[];
 export const talents = talentsJson as TalentRec[];
 export const spells = spellsJson as SpellRec[];
+export const weapons = weaponsJson as WeaponRec[];
+export const armors = armorsJson as ArmorRec[];
 
 // Normalizers
 export const getRaceName = (r: RaceRec) => String(r.Name ?? r.name ?? "");

@@ -64,6 +64,8 @@ export const emptyCharacter = (): Character => ({
     description: "",
   })),
   talents: Array.from({ length: 0 }, () => ({ name: "", description: "" })),
+  weapons: [],
+  armors: [],
   equipment: Array.from({ length: 5 }, () => ({ name: "", description: "" })),
   desc: {
     area: "",

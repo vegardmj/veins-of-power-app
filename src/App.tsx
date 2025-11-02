@@ -23,6 +23,8 @@ import { HeaderSection } from "./components/HeaderSection";
 import { TalentsGrid } from "./components/TalentsGrid";
 import { SpellsGrid } from "./components/SpellsGrid";
 import { SpellcastingBlock } from "./components/SpellcastingBlock";
+import { WeaponsGrid } from "./components/WeaponsGrid";
+import { ArmorsGrid } from "./components/ArmorsGrid";
 
 // ✅ Centralized data (no fetch)
 import {
@@ -187,6 +189,14 @@ export default function App() {
           filterAbility={ch.spellcasting?.ability ?? ""}
           filterDomain={ch.spellcasting?.domain ?? ""}
         />
+      </Section>
+
+      <Section title="Weapons">
+        <WeaponsGrid rows={ch.weapons} onChange={(r) => update("weapons", r)} />
+      </Section>
+
+      <Section title="Armors">
+        <ArmorsGrid rows={ch.armors} onChange={(r) => update("armors", r)} />
       </Section>
 
       <InfoModal
