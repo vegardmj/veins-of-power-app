@@ -33,19 +33,24 @@ export const emptyCharacter = (): Character => ({
     bonus: "",
     total: "",
   })),
-  actions: Array.from({ length: 7 }, () => ({
+  actions: Array.from({ length: 3 }, () => ({
     ability: "",
     toHit: "",
     damage: "",
     effect: "",
   })),
-  supportActions: Array.from({ length: 6 }, () => ({
+  supportActions: Array.from({ length: 3 }, () => ({
     ability: "",
     toHit: "",
     damage: "",
     effect: "",
   })),
-  reactions: Array.from({ length: 6 }, () => ({ ability: "", effect: "" })),
+  reactions: Array.from({ length: 3 }, () => ({
+    ability: "",
+    toHit: "",
+    damage: "",
+    effect: "",
+  })),
   spellMeta: {
     ability: "Int",
     domain: "",

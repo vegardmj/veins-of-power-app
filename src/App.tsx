@@ -193,40 +193,10 @@ export default function App() {
         />
         <div style={{ height: 8 }} />
         <label>Reactions</label>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr>
-              <th style={th}>Ability</th>
-              <th style={th}>Effect</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ch.reactions.map((r, i) => (
-              <tr key={i}>
-                <td style={td}>
-                  <Input
-                    value={r.ability}
-                    onChange={(e) => {
-                      const copy = [...ch.reactions];
-                      copy[i] = { ...r, ability: e.target.value };
-                      update("reactions", copy);
-                    }}
-                  />
-                </td>
-                <td style={td}>
-                  <Input
-                    value={r.effect}
-                    onChange={(e) => {
-                      const copy = [...ch.reactions];
-                      copy[i] = { ...r, effect: e.target.value };
-                      update("reactions", copy);
-                    }}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <ActionsGrid
+          rows={ch.reactions}
+          onChange={(r) => update("reactions", r)}
+        />
       </Section>
       <InfoModal
         open={raceModalOpen}
