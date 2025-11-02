@@ -7,6 +7,10 @@ export type ColumnDef<TRow> = {
   key: keyof TRow;
   header: string;
   width?: number;
+  /** Set to "textarea" for multiline cells (autosizing). Defaults to "text". */
+  inputType?: "text" | "textarea";
+  /** Initial rows for textarea (autosizes beyond this). Defaults to 2. */
+  textareaRows?: number;
   renderCell?: (
     row: TRow,
     setRow: (patch: Partial<TRow>) => void
@@ -36,6 +40,7 @@ export type GenericPickerGridProps<TItem, TRow> = {
 
   toRow: (item: TItem) => TRow;
 
+  /** For Edit: map an existing row back to a catalog key (usually the Name field) */
   getRowCatalogKey?: (row: TRow) => string | null;
 
   titleAddModal?: string;
@@ -47,6 +52,7 @@ export type GenericPickerGridProps<TItem, TRow> = {
   }>;
   filters?: Array<PickerFilter<TItem, string>>;
 
+  /** Row key extractor (optional, otherwise uses index) */
   getRowKey?: (row: TRow, index: number) => React.Key;
 
   /**
@@ -215,7 +221,7 @@ export function GenericPickerGrid<TItem, TRow>({
     closeModal();
   };
 
-  // ---- Header cells (array to avoid whitespace nodes)
+  // ---- Header cells (array to avoid whitespace text nodes inside <tr>)
   const headerCells = useMemo(() => {
     const arr: React.ReactNode[] = [];
     arr.push(<th key="__drag" style={{ ...th, width: 4 }} />);
@@ -233,6 +239,13 @@ export function GenericPickerGrid<TItem, TRow>({
     return arr;
   }, [columns]);
 
+  // ---- Autosizing for textarea cells
+  const autoResize = (el: HTMLTextAreaElement | null) => {
+    if (!el) return;
+    el.style.height = "0px";
+    el.style.height = `${el.scrollHeight}px`;
+  };
+
   return (
     <>
       <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -244,7 +257,7 @@ export function GenericPickerGrid<TItem, TRow>({
             const key = getRowKey?.(row, idx) ?? idx;
             const rowCells: React.ReactNode[] = [];
 
-            // drag
+            // drag handle
             rowCells.push(
               <td
                 key="__drag"
@@ -276,6 +289,7 @@ export function GenericPickerGrid<TItem, TRow>({
             // data cells
             for (const col of columns) {
               const setRow = (patch: Partial<TRow>) => setRowAt(idx, patch);
+
               if (col.renderCell) {
                 rowCells.push(
                   <td key={String(col.key)} style={td}>
@@ -284,15 +298,41 @@ export function GenericPickerGrid<TItem, TRow>({
                 );
               } else {
                 const value = (row as any)[col.key] ?? "";
+                const isTextarea = col.inputType === "textarea";
+                const commonStyle: React.CSSProperties = col.width
+                  ? { maxWidth: col.width }
+                  : undefined;
+
                 rowCells.push(
                   <td key={String(col.key)} style={td}>
-                    <Input
-                      value={value}
-                      onChange={(e) =>
-                        setRow({ [col.key]: e.target.value } as Partial<TRow>)
-                      }
-                      style={col.width ? { maxWidth: col.width } : undefined}
-                    />
+                    {isTextarea ? (
+                      <textarea
+                        value={value}
+                        rows={col.textareaRows ?? 2}
+                        onChange={(e) =>
+                          setRow({ [col.key]: e.target.value } as Partial<TRow>)
+                        }
+                        // ref={autoResize}
+                        // onInput={(e) => autoResize(e.currentTarget)}
+                        style={{
+                          width: "100%",
+                          resize: "vertical",
+                          borderRadius: 6,
+                          border: "1px solid #ddd",
+                          padding: "6px 8px",
+                          lineHeight: 1.35,
+                          ...commonStyle,
+                        }}
+                      />
+                    ) : (
+                      <Input
+                        value={value}
+                        onChange={(e) =>
+                          setRow({ [col.key]: e.target.value } as Partial<TRow>)
+                        }
+                        style={commonStyle}
+                      />
+                    )}
                   </td>
                 );
               }
