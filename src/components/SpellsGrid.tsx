@@ -1,5 +1,5 @@
 // src/components/SpellsGrid.tsx
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import type { SpellRow } from "../types";
 import { GenericPickerGrid } from "./GenericPickerGrid";
 import type { ColumnDef, PickerFilter } from "./GenericPickerGrid";
@@ -12,7 +12,7 @@ const NARROW = 110;
 function parseMana(rec: SpellRecord): number {
   const raw = String(rec["Mana"] ?? "").trim();
   const n = parseInt(raw, 10);
-  return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
+  return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY; // unknown mana goes last
 }
 function hasFocus(rec: SpellRecord): boolean {
   const raw = String(rec["Focus"] ?? "")
@@ -23,6 +23,23 @@ function hasFocus(rec: SpellRecord): boolean {
 function normalize(s: string) {
   return (s || "").toLowerCase().trim();
 }
+function spellMatches(
+  rec: SpellRecord,
+  ability: string,
+  domain: string
+): boolean {
+  const a = normalize(ability);
+  const d = normalize(domain);
+  if (!a && !d) return true; // no filter selected => show all
+  const recAbility = normalize(rec["Ability"] || "");
+  const recDomains = String(rec["Domain"] || "")
+    .split(",")
+    .map((x) => normalize(x))
+    .filter(Boolean);
+  const abilityOk = a ? recAbility === a : false;
+  const domainOk = d ? recDomains.includes(d) : false;
+  return abilityOk || domainOk; // keep your OR semantics
+}
 
 export function SpellsGrid({
   rows,
@@ -32,15 +49,16 @@ export function SpellsGrid({
 }: {
   rows: SpellRow[];
   onChange: (r: SpellRow[]) => void;
-  filterAbility?: string;
-  filterDomain?: string;
+  /** Read-only values coming from SpellcastingBlock */
+  filterAbility?: string; // "Int" | "Con" | "Cha" | ""
+  filterDomain?: string; // one of DOMAINS or ""
 }) {
   // Build sorted catalog once
   const spellItems = useMemo(() => {
     const copy = [...catalogSpells];
     copy.sort((a, b) => {
-      const ma = parseMana(a);
-      const mb = parseMana(b);
+      const ma = parseMana(a),
+        mb = parseMana(b);
       if (ma !== mb) return ma - mb;
       const na = String(a.Name ?? "");
       const nb = String(b.Name ?? "");
@@ -59,62 +77,47 @@ export function SpellsGrid({
     { key: "description", header: "Description" },
   ];
 
-  // Optional dynamic filters (ability/domain OR logic like before)
-  const [ability, setAbility] = useState(filterAbility ?? "");
-  const [domain, setDomain] = useState(filterDomain ?? "");
-
-  function spellMatches(rec: SpellRecord, a: string, d: string) {
-    const A = normalize(a);
-    const D = normalize(d);
-    if (!A && !D) return true;
-    const recAbility = normalize(rec["Ability"] || "");
-    const recDomains = String(rec["Domain"] || "")
-      .split(",")
-      .map((x) => normalize(x))
-      .filter(Boolean);
-    const abilityOk = A ? recAbility === A : false;
-    const domainOk = D ? recDomains.includes(D) : false;
-    return abilityOk || domainOk;
-  }
-
+  // Read-only filters (rendered as disabled inputs)
   const filters: PickerFilter<SpellRecord, string>[] = [
     {
-      label: "Ability",
-      value: ability,
-      onChange: setAbility,
-      renderControl: (val, onCh) => (
+      label: "Ability (from sheet)",
+      value: filterAbility,
+      onChange: () => {}, // no-op (read-only)
+      renderControl: (val) => (
         <input
-          value={val}
-          onChange={(e) => onCh(e.target.value)}
+          value={val || "—"}
+          readOnly
+          disabled
           style={{
             padding: 6,
             borderRadius: 8,
-            border: "1px solid #ccc",
+            border: "1px solid #ddd",
             maxWidth: 240,
+            background: "#f8f8f8",
           }}
-          placeholder="e.g. Int / Cha"
         />
       ),
-      predicate: (it, v) => spellMatches(it, v, domain),
+      predicate: (it) => spellMatches(it, filterAbility, filterDomain),
     },
     {
-      label: "Domain",
-      value: domain,
-      onChange: setDomain,
-      renderControl: (val, onCh) => (
+      label: "Domain (from sheet)",
+      value: filterDomain,
+      onChange: () => {}, // no-op (read-only)
+      renderControl: (val) => (
         <input
-          value={val}
-          onChange={(e) => onCh(e.target.value)}
+          value={val || "—"}
+          readOnly
+          disabled
           style={{
             padding: 6,
             borderRadius: 8,
-            border: "1px solid #ccc",
+            border: "1px solid #ddd",
             maxWidth: 240,
+            background: "#f8f8f8",
           }}
-          placeholder="e.g. Chaos"
         />
       ),
-      predicate: (it, v) => spellMatches(it, ability, v),
+      predicate: (it) => spellMatches(it, filterAbility, filterDomain),
     },
   ];
 
