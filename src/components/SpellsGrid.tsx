@@ -69,12 +69,13 @@ export function SpellsGrid({
 
   const columns: ColumnDef<SpellRow>[] = [
     { key: "name", header: "Name" },
-    { key: "action", header: "Action", width: NARROW },
     { key: "mana", header: "Mana", width: NARROW },
-    { key: "range", header: "Range", width: NARROW },
-    { key: "duration", header: "Duration", width: NARROW },
-    { key: "focus", header: "Focus", width: NARROW },
-    { key: "description", header: "Description" },
+    {
+      key: "description",
+      header: "Description",
+      inputType: "textarea",
+      textareaRows: 3,
+    },
   ];
 
   // Read-only filters (rendered as disabled inputs)
