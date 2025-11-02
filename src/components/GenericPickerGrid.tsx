@@ -5,7 +5,7 @@ import { Input, th, td } from "./UI";
 
 export type ColumnDef<TRow> = {
   key: keyof TRow;
-  header: string; // shown in header row (data columns only)
+  header: string;
   width?: number;
   renderCell?: (
     row: TRow,
@@ -36,7 +36,6 @@ export type GenericPickerGridProps<TItem, TRow> = {
 
   toRow: (item: TItem) => TRow;
 
-  /** For Edit: map an existing row back to a catalog key (usually the Name field) */
   getRowCatalogKey?: (row: TRow) => string | null;
 
   titleAddModal?: string;
@@ -48,11 +47,24 @@ export type GenericPickerGridProps<TItem, TRow> = {
   }>;
   filters?: Array<PickerFilter<TItem, string>>;
 
-  /** Row key extractor (optional, otherwise uses index) */
   getRowKey?: (row: TRow, index: number) => React.Key;
+
+  /**
+   * Inject extra controls into the modal and optionally:
+   * - return a row patch to merge into the parent row
+   * - return extra rows to append/insert when saving
+   */
+  extraPickers?: (
+    selectedItem: TItem | null,
+    mode: "add" | "edit"
+  ) => {
+    controls: React.ReactNode;
+    getRowPatch?: () => Partial<TRow>;
+    getExtraRows?: () => TRow[];
+  } | null;
 };
 
-// Inline pencil icon (no external libs)
+// inline Pencil icon
 const PencilIcon: React.FC = () => (
   <svg
     viewBox="0 0 24 24"
@@ -89,6 +101,7 @@ export function GenericPickerGrid<TItem, TRow>({
   previewSections = [],
   filters = [],
   getRowKey,
+  extraPickers,
 }: GenericPickerGridProps<TItem, TRow>) {
   // ---- DnD
   const [overIndex, setOverIndex] = useState<number | null>(null);
@@ -96,7 +109,7 @@ export function GenericPickerGrid<TItem, TRow>({
 
   const setRowAt = (idx: number, patch: Partial<TRow>) => {
     const copy = [...rows];
-    // @ts-expect-error spread partial is fine
+    // @ts-expect-error partial merge ok
     copy[idx] = { ...(copy[idx] as any), ...patch };
     onChange(copy);
   };
@@ -138,20 +151,23 @@ export function GenericPickerGrid<TItem, TRow>({
     setModalOpen(true);
   };
 
+  const filteredItems = useMemo(
+    () =>
+      catalogItems.filter((it) =>
+        filters.every((f) => f.predicate(it, f.value))
+      ),
+    [catalogItems, filters]
+  );
+
   const openEdit = (rowIdx: number) => {
     setMode("edit");
     setEditIndex(rowIdx);
-
-    // Preselect matching catalog item by key (row->key vs item->key)
     let targetKey: string | null = null;
-    if (getRowCatalogKey) {
-      targetKey = getRowCatalogKey(rows[rowIdx]);
-    }
+    if (getRowCatalogKey) targetKey = getRowCatalogKey(rows[rowIdx]);
     const idxInFiltered = filteredItems.findIndex((it) => {
       const itemKey = (getItemKey?.(it) ?? getItemLabel(it)) || "";
       return itemKey === (targetKey ?? "");
     });
-
     setSelectedIdx(idxInFiltered >= 0 ? idxInFiltered : -1);
     setModalOpen(true);
   };
@@ -163,16 +179,29 @@ export function GenericPickerGrid<TItem, TRow>({
     setMode("add");
   };
 
+  const selectedItem =
+    selectedIdx >= 0 && selectedIdx < filteredItems.length
+      ? filteredItems[selectedIdx]
+      : null;
+
   const saveModal = () => {
     if (selectedIdx < 0 || selectedIdx >= filteredItems.length) return;
     const item = filteredItems[selectedIdx];
-    const newRow = toRow(item);
+    const baseRow = toRow(item);
+
+    const extra = extraPickers?.(selectedItem, mode) ?? null;
+    const patch = extra?.getRowPatch?.() ?? {};
+    const extraRows = extra?.getExtraRows?.() ?? [];
+
+    // @ts-expect-error patch widening ok
+    const parentRow = { ...(baseRow as any), ...(patch as any) } as TRow;
 
     if (mode === "add") {
-      onChange([...(rows || []), newRow]);
+      onChange([...(rows || []), parentRow, ...extraRows]);
     } else if (mode === "edit" && editIndex != null) {
       const copy = [...rows];
-      copy[editIndex] = newRow;
+      // replace the edited row with parent + extras
+      copy.splice(editIndex, 1, parentRow, ...extraRows);
       onChange(copy);
     }
     closeModal();
@@ -186,24 +215,10 @@ export function GenericPickerGrid<TItem, TRow>({
     closeModal();
   };
 
-  // ---- Filters -> filteredItems
-  const filteredItems = useMemo(
-    () =>
-      catalogItems.filter((it) =>
-        filters.every((f) => f.predicate(it, f.value))
-      ),
-    [catalogItems, filters]
-  );
-
-  const selectedItem =
-    selectedIdx >= 0 && selectedIdx < filteredItems.length
-      ? filteredItems[selectedIdx]
-      : null;
-
-  // ---- Header cells (build as array to avoid whitespace text nodes)
+  // ---- Header cells (array to avoid whitespace nodes)
   const headerCells = useMemo(() => {
     const arr: React.ReactNode[] = [];
-    arr.push(<th key="__drag" style={{ ...th, width: 4 }} />); // blank drag header
+    arr.push(<th key="__drag" style={{ ...th, width: 4 }} />);
     for (const c of columns) {
       arr.push(
         <th
@@ -214,7 +229,7 @@ export function GenericPickerGrid<TItem, TRow>({
         </th>
       );
     }
-    arr.push(<th key="__actions" style={{ ...th, width: 36 }} />); // blank actions header
+    arr.push(<th key="__actions" style={{ ...th, width: 36 }} />);
     return arr;
   }, [columns]);
 
@@ -227,11 +242,9 @@ export function GenericPickerGrid<TItem, TRow>({
         <tbody>
           {(rows || []).map((row, idx) => {
             const key = getRowKey?.(row, idx) ?? idx;
-
-            // Build row cells as an array to avoid whitespace nodes
             const rowCells: React.ReactNode[] = [];
 
-            // Drag handle
+            // drag
             rowCells.push(
               <td
                 key="__drag"
@@ -260,7 +273,7 @@ export function GenericPickerGrid<TItem, TRow>({
               </td>
             );
 
-            // Data cells
+            // data cells
             for (const col of columns) {
               const setRow = (patch: Partial<TRow>) => setRowAt(idx, patch);
               if (col.renderCell) {
@@ -285,7 +298,7 @@ export function GenericPickerGrid<TItem, TRow>({
               }
             }
 
-            // Actions (pencil)
+            // actions
             rowCells.push(
               <td
                 key="__actions"
@@ -333,7 +346,7 @@ export function GenericPickerGrid<TItem, TRow>({
         </tbody>
       </table>
 
-      {/* Add button */}
+      {/* Add */}
       <div style={{ marginTop: 8, display: "flex", gap: 8 }}>
         <button
           type="button"
@@ -349,7 +362,7 @@ export function GenericPickerGrid<TItem, TRow>({
         </button>
       </div>
 
-      {/* Shared Add/Edit modal */}
+      {/* Modal */}
       <InfoModal
         open={modalOpen}
         title={mode === "add" ? titleAddModal : "Edit"}
@@ -392,6 +405,9 @@ export function GenericPickerGrid<TItem, TRow>({
               );
             })}
           </select>
+
+          {/* Extra controls from wrapper */}
+          {extraPickers?.(selectedItem, mode)?.controls ?? null}
 
           {/* Preview */}
           <div
@@ -463,13 +479,13 @@ export function GenericPickerGrid<TItem, TRow>({
               <button
                 type="button"
                 onClick={saveModal}
-                disabled={!selectedItem}
+                disabled={selectedIdx < 0}
                 style={{
                   padding: "6px 10px",
                   borderRadius: 8,
                   border: "1px solid #4a7",
                   background: "#eaffea",
-                  cursor: selectedItem ? "pointer" : "not-allowed",
+                  cursor: selectedIdx >= 0 ? "pointer" : "not-allowed",
                 }}
               >
                 Save
