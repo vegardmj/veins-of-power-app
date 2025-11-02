@@ -22,6 +22,9 @@ import { AbilityTable } from "./components/AbilityTable";
 import { SkillsGrid } from "./components/SkillsGrid";
 import { ActionsGrid } from "./components/ActionsGrid";
 import { HeaderSection } from "./components/HeaderSection";
+import { TalentsGrid } from "./components/TalentsGrid";
+import { SpellsGrid } from "./components/SpellsGrid";
+import { SpellcastingBlock } from "./components/SpellcastingBlock";
 
 export default function App() {
   const [ch, setCh] = useState<Character>(
@@ -198,6 +201,23 @@ export default function App() {
           onChange={(r) => update("reactions", r)}
         />
       </Section>
+
+      <Section title="Talents">
+        <TalentsGrid rows={ch.talents} onChange={(r) => update("talents", r)} />
+      </Section>
+
+      <Section title="Spellcasting">
+        <SpellcastingBlock ch={ch} setCh={setCh} />
+      </Section>
+      <Section title="Spells">
+        <SpellsGrid
+          rows={ch.spells}
+          onChange={(r) => update("spells", r)}
+          filterAbility={ch.spellcasting?.ability ?? ""}
+          filterDomain={ch.spellcasting?.domain ?? ""}
+        />
+      </Section>
+
       <InfoModal
         open={raceModalOpen}
         title={ch.raceTalent.split(" | ")[0] || "Race"}

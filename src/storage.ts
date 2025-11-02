@@ -58,13 +58,13 @@ export const emptyCharacter = (): Character => ({
     spellAttack: "",
     spellSave: "",
   },
-  spells: Array.from({ length: 12 }, () => ({
+  spells: Array.from({ length: 0 }, () => ({
     name: "",
     mana: "",
     description: "",
   })),
-  talents: Array.from({ length: 10 }, () => ({ name: "", description: "" })),
-  equipment: Array.from({ length: 10 }, () => ({ name: "", description: "" })),
+  talents: Array.from({ length: 0 }, () => ({ name: "", description: "" })),
+  equipment: Array.from({ length: 5 }, () => ({ name: "", description: "" })),
   desc: {
     area: "",
     friendHome: "",

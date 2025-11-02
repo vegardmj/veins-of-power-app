@@ -36,8 +36,32 @@ export type ActionRow = {
   damage: string;
   effect: string;
 };
-export type SpellRow = { name: string; mana: string; description: string };
-export type TalentRow = { name: string; description: string };
+export type TalentRow = {
+  name: string;
+  description: string;
+  action?: string; // e.g., R / SA / A
+  mana?: string; // e.g., "2"
+  order?: string; // e.g., "Battlecraft"
+};
+
+export type SpellRow = {
+  name: string;
+  description: string;
+  mana: string; // keep as string for now
+  ability?: string; // e.g., "Int"
+  action?: string; // e.g., "SA"
+  damageType?: string; // e.g., "Poison"
+  domain?: string; // e.g., "Nature, Darkness"
+  duration?: string; // e.g., "1min"
+  focus?: string; // e.g., "Yes"
+  range?: string; // e.g., "Touch"
+};
+export type Spellcasting = {
+  ability: "Int" | "Con" | "Cha" | "";
+  domain: string;
+  spellAttack: number | "";
+};
+
 export type EquipRow = { name: string; description: string };
 
 export type Character = {
