@@ -165,7 +165,7 @@ export default function App() {
       </header>
 
       {/* Header block */}
-      <Section title="Header">
+      <Section>
         <HeaderSection
           ch={ch}
           raceNames={raceNames}
