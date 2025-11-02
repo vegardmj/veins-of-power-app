@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import type { TalentRow } from "../types";
 import { Input, th, td } from "./UI";
 import { InfoModal } from "./InfoModal";
@@ -7,7 +7,7 @@ import { lines } from "../utils/text";
 
 const FIELD_W = 120;
 
-// very flexible: accepts any fields from talents.json
+// Accept any fields from talents.json
 type TalentRecord = Record<string, string>;
 
 const INFO_FIELDS = [
@@ -18,12 +18,6 @@ const INFO_FIELDS = [
   "Requirements",
   "Race requirements",
 ];
-
-const emptyTalent = (): TalentRow => ({
-  name: "",
-  action: "",
-  description: "",
-});
 
 const Header: React.FC = () => (
   <thead>
@@ -41,6 +35,22 @@ function move<T>(arr: T[], from: number, to: number): T[] {
   const [item] = copy.splice(from, 1);
   copy.splice(to, 0, item);
   return copy;
+}
+
+function normalize(s?: string) {
+  return (s ?? "").trim().toLowerCase();
+}
+
+// Match by selected type: checks common fields in your data
+function matchesType(
+  rec: TalentRecord,
+  selectedType: "Main" | "Secondary"
+): boolean {
+  if (!selectedType) return true; // no filter
+  const want = normalize(selectedType);
+  const fields = [normalize(rec["Table"])];
+  // include if any field equals desired type
+  return fields.some((v) => v && v === want);
 }
 
 export function TalentsGrid({
@@ -66,8 +76,10 @@ export function TalentsGrid({
     Record<string, TalentRecord>
   >({});
   const [selectedName, setSelectedName] = useState<string>("");
+  const [selectedType, setSelectedType] = useState<"Main" | "Secondary">(
+    "Main"
+  );
 
-  // lazy-load talents.json when the modal first opens
   const ensureTalentsLoaded = async () => {
     if (talentNames.length > 0) return;
     try {
@@ -76,16 +88,24 @@ export function TalentsGrid({
       const normalized: TalentRecord[] = arr
         .map((x) => (typeof x === "object" && x ? x : {}))
         .map((r) => {
+          // normalize primary name key
           if (!r["Name"] && (r as any)["name"]) r["Name"] = (r as any)["name"];
           return r as TalentRecord;
         })
         .filter((r) => r["Name"]);
+
       const map: Record<string, TalentRecord> = {};
       normalized.forEach((r) => {
         map[r["Name"]] = r;
       });
+
+      // default sort by Name
+      const namesSorted = Object.keys(map).sort((a, b) =>
+        a.localeCompare(b, undefined, { sensitivity: "base" })
+      );
+
       setTalentByName(map);
-      setTalentNames(Object.keys(map).sort());
+      setTalentNames(namesSorted);
     } catch (e) {
       console.warn("Failed to load talents.json from /public/data.", e);
       setTalentByName({});
@@ -95,7 +115,8 @@ export function TalentsGrid({
 
   const openAddModal = async () => {
     await ensureTalentsLoaded();
-    setSelectedName("");
+    setSelectedType("Main"); // no filter by default
+    setSelectedName(""); // clear selection
     setAddOpen(true);
   };
 
@@ -139,7 +160,20 @@ export function TalentsGrid({
     dragIndexRef.current = null;
   };
 
-  // ---------- Render ----------
+  // ---------- Filtered list for modal ----------
+  const filteredNames = talentNames.filter((n) =>
+    matchesType(talentByName[n], selectedType)
+  );
+
+  // If current selection doesn't match new filter, clear it
+  const onTypeChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
+    const nextType = e.target.value as "Main" | "Secondary";
+    setSelectedType(nextType);
+    if (selectedName && !matchesType(talentByName[selectedName], nextType)) {
+      setSelectedName("");
+    }
+  };
+
   const selected = selectedName ? (talentByName[selectedName] ?? null) : null;
 
   return (
@@ -223,7 +257,25 @@ export function TalentsGrid({
       {/* Picker modal */}
       <InfoModal open={addOpen} title="Add Talent" onClose={onCancelAdd}>
         <div style={{ display: "grid", gap: 12 }}>
-          <label style={{ fontSize: 13, fontWeight: 600 }}>Select talent</label>
+          {/* Type filter */}
+          <label style={{ fontSize: 13, fontWeight: 600 }}>Type</label>
+          <select
+            value={selectedType}
+            onChange={onTypeChange}
+            style={{
+              padding: "6px 8px",
+              borderRadius: 8,
+              border: "1px solid #ccc",
+              maxWidth: 240,
+            }}
+          >
+            <option value="Main">Main</option>
+            <option value="Secondary">Secondary</option>
+          </select>
+
+          <label style={{ fontSize: 13, fontWeight: 600, marginTop: 4 }}>
+            Select talent ({selectedType})
+          </label>
           <select
             value={selectedName}
             onChange={(e) => setSelectedName(e.target.value)}
@@ -231,11 +283,11 @@ export function TalentsGrid({
               padding: "6px 8px",
               borderRadius: 8,
               border: "1px solid #ccc",
-              maxWidth: 360,
+              maxWidth: 420,
             }}
           >
             <option value="">— Choose —</option>
-            {talentNames.map((n) => (
+            {filteredNames.map((n) => (
               <option key={n} value={n}>
                 {n}
               </option>
