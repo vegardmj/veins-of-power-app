@@ -1,52 +1,35 @@
-import { useEffect, useState } from "react";
-import { getItems, type Item } from "./api/client";
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
-export default function App() {
-  const [items, setItems] = useState<Item[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    getItems()
-      .then(setItems)
-      .catch((e) => setError(e.message));
-  }, []);
+function App() {
+  const [count, setCount] = useState(0)
 
   return (
-    <div style={{ maxWidth: 720, margin: "2rem auto", padding: "0 1rem" }}>
-      <h1>My App</h1>
-      <p>
-        This is a static React app reading from JSON. Backend comes later ✨
+    <>
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
       </p>
-
-      {error && <div style={{ color: "crimson" }}>Error: {error}</div>}
-      {!items && !error && <div>Loading…</div>}
-
-      {items && (
-        <ul
-          style={{
-            display: "grid",
-            gap: "0.75rem",
-            padding: 0,
-            listStyle: "none",
-          }}
-        >
-          {items.map((it) => (
-            <li
-              key={it.id}
-              style={{
-                border: "1px solid #ddd",
-                borderRadius: 8,
-                padding: "0.75rem",
-              }}
-            >
-              <strong>{it.title}</strong>
-              {it.details && (
-                <p style={{ margin: "0.5rem 0 0" }}>{it.details}</p>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
+    </>
+  )
 }
+
+export default App
