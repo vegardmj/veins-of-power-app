@@ -14,7 +14,7 @@ export const emptyAbilities = (): Abilities => ({
 export const emptyCharacter = (): Character => ({
   name: "",
   raceTalent: "",
-  level: "",
+  level: 1,
   age: "",
   speed: "",
   gender: "",

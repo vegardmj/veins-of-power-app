@@ -2,7 +2,7 @@
 import React from "react";
 import type { Character } from "../types";
 import { TALENTS } from "../constants";
-import { Section, Row, Col, Label, Input, Select } from "./UI";
+import { Row, Col, Label, Input, Select } from "./UI";
 
 type Props = {
   ch: Character;
@@ -46,8 +46,37 @@ export function HeaderSection({
       </Col>
 
       <Col span={6}>
-        <Label>Race & Talent</Label>
-        <div style={{ display: "flex", gap: 8 }}>
+        {/* Label row with help icon on the right */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Label>Race &amp; Talent</Label>
+          {race && (
+            <button
+              title="Show race info"
+              aria-label="Show race info"
+              onClick={onOpenRaceInfo}
+              style={{
+                border: "none",
+                background: "transparent",
+                cursor: "pointer",
+                fontSize: 16,
+                lineHeight: 1,
+                padding: 2,
+                color: "#666",
+              }}
+            >
+              {/* simple help icon without extra deps */}ⓘ
+            </button>
+          )}
+        </div>
+
+        {/* Selects */}
+        <div style={{ display: "flex", gap: 8, marginTop: 6 }}>
           <Select
             value={race}
             onChange={(e) => handleRaceChange(e.target.value)}
@@ -64,29 +93,13 @@ export function HeaderSection({
             value={talent}
             onChange={(e) => handleTalentChange(e.target.value)}
           >
-            <option value="">— Talent —</option>
+            <option value="">— Race Talent —</option>
             {TALENTS.map((t) => (
               <option key={t} value={t}>
                 {t}
               </option>
             ))}
           </Select>
-
-          {race && (
-            <button
-              title="Show race info"
-              onClick={onOpenRaceInfo}
-              style={{
-                border: "1px solid #ddd",
-                background: "#fafafa",
-                borderRadius: 8,
-                padding: "6px 10px",
-                cursor: "pointer",
-              }}
-            >
-              Info
-            </button>
-          )}
         </div>
       </Col>
 
