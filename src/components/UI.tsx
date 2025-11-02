@@ -141,6 +141,6 @@ export const tdHead: React.CSSProperties = {
   width: 120,
 };
 export const td: React.CSSProperties = {
-  padding: "4px 8px",
+  padding: "4px 12px",
   borderBottom: "1px solid #eee",
 };
