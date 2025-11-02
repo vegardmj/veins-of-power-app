@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import type { Character } from "./types";
-import { TALENTS, DOMAINS } from "./constants";
-import type { RaceRecord } from "./types";
+// import { TALENTS, DOMAINS } from "./constants"; // <- not used here
 import { InfoModal } from "./components/InfoModal";
 import { RaceInfo } from "./components/RaceInfo";
-import { loadJson } from "./api/client";
 import { emptyCharacter, loadCharacter, saveCharacter } from "./storage";
 import {
   Section,
@@ -26,57 +24,25 @@ import { TalentsGrid } from "./components/TalentsGrid";
 import { SpellsGrid } from "./components/SpellsGrid";
 import { SpellcastingBlock } from "./components/SpellcastingBlock";
 
+// ✅ Centralized data (no fetch)
+import {
+  raceByName as catalogRaceByName,
+  raceNamesFromJson,
+} from "./models/catalog";
+
 export default function App() {
   const [ch, setCh] = useState<Character>(
     () => loadCharacter() ?? emptyCharacter()
   );
   const [autosave, setAutosave] = useState(true);
-  const [raceNames, setRaceNames] = useState<string[]>([]);
-  const [raceByName, setRaceByName] = useState<Record<string, RaceRecord>>({});
   const [raceModalOpen, setRaceModalOpen] = useState(false);
+
+  // Derived once from catalog
+  const raceNames = raceNamesFromJson;
 
   useEffect(() => {
     if (autosave) saveCharacter(ch);
   }, [ch, autosave]);
-
-  // Load races.json
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await loadJson<unknown>("races.json");
-        // Expect array of objects with a "Name" field. We’ll be permissive.
-        const arr = Array.isArray(data) ? (data as any[]) : [];
-        const normalized: RaceRecord[] = arr
-          .map((x) => (typeof x === "object" && x ? x : {}))
-          .map((r) => {
-            // Also accept "name" (lowercase) by normalizing:
-            if (!r["Name"] && r["name"]) r["Name"] = r["name"];
-            return r as RaceRecord;
-          })
-          .filter((r) => r["Name"]);
-        const map: Record<string, RaceRecord> = {};
-        normalized.forEach((r) => {
-          map[r["Name"]] = r;
-        });
-        setRaceByName(map);
-        setRaceNames(Object.keys(map).sort());
-      } catch (e) {
-        console.error("Could not load races.json.", e);
-        const fallback = [
-          "Human",
-          "Elf",
-          "Dwarf",
-          "Halfling",
-          "Half-Giant",
-          "Gnome",
-        ];
-        setRaceNames(fallback);
-        setRaceByName(
-          Object.fromEntries(fallback.map((n) => [n, { Name: n }]))
-        );
-      }
-    })();
-  }, []);
 
   const update = <K extends keyof Character>(key: K, value: Character[K]) =>
     setCh((prev) => ({ ...prev, [key]: value }));
@@ -94,6 +60,7 @@ export default function App() {
     a.click();
     URL.revokeObjectURL(url);
   };
+
   const importJson = (file: File) => {
     const reader = new FileReader();
     reader.onload = () => {
@@ -105,6 +72,10 @@ export default function App() {
     };
     reader.readAsText(file);
   };
+
+  // Convenience: current race name and record
+  const currentRaceName = ch.raceTalent.split(" | ")[0] || "";
+  const currentRaceRec = catalogRaceByName.get(currentRaceName) ?? null;
 
   return (
     <main
@@ -220,15 +191,14 @@ export default function App() {
 
       <InfoModal
         open={raceModalOpen}
-        title={ch.raceTalent.split(" | ")[0] || "Race"}
+        title={currentRaceName || "Race"}
         onClose={() => setRaceModalOpen(false)}
       >
         <RaceInfo
-          race={raceByName[ch.raceTalent.split(" | ")[0] || ""] ?? null}
+          race={currentRaceRec}
+          talentName={ch.raceTalent.split(" | ")[1] || ""} // ← pass selected talent
         />
       </InfoModal>
-
-      {/* You can move Spells/Talents/Equipment/Description into their own components later too */}
     </main>
   );
 }

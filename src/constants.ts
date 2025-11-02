@@ -7,8 +7,6 @@ export const RACE_INFO_FIELDS: string[] = [
   "Speed",
   "Hit Point Die",
   "Mana",
-  "Talents",
-  "Race Talents",
   "Demographics",
 ];
 

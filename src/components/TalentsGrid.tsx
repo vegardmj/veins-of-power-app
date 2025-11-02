@@ -1,14 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import type { TalentRow } from "../types";
 import { Input, th, td } from "./UI";
 import { InfoModal } from "./InfoModal";
-import { loadJson } from "../api/client";
 import { lines } from "../utils/text";
+import { talents as catalogTalents } from "../models/catalog";
 
 const FIELD_W = 120;
 
 // Accept any fields from talents.json
-type TalentRecord = Record<string, string>;
+type TalentRecord = Record<string, any>;
 
 const INFO_FIELDS = [
   "Description",
@@ -37,20 +37,19 @@ function move<T>(arr: T[], from: number, to: number): T[] {
   return copy;
 }
 
-function normalize(s?: string) {
+function norm(s?: string) {
   return (s ?? "").trim().toLowerCase();
 }
 
-// Match by selected type: checks common fields in your data
-function matchesType(
-  rec: TalentRecord,
-  selectedType: "Main" | "Secondary"
-): boolean {
-  if (!selectedType) return true; // no filter
-  const want = normalize(selectedType);
-  const fields = [normalize(rec["Table"])];
-  // include if any field equals desired type
-  return fields.some((v) => v && v === want);
+function tableOf(rec: TalentRecord) {
+  return norm(rec.Table ?? rec.table);
+}
+
+// Match by selected type using the "Table" field
+function matchesType(rec: TalentRecord, selectedType: "Main" | "Secondary") {
+  if (!selectedType) return true;
+  const want = norm(selectedType);
+  return tableOf(rec) === want;
 }
 
 export function TalentsGrid({
@@ -69,54 +68,30 @@ export function TalentsGrid({
     onChange(copy);
   };
 
+  // ---------- Build catalog maps (once) ----------
+  const { talentByName, talentNames } = useMemo(() => {
+    const map: Record<string, TalentRecord> = {};
+    for (const t of catalogTalents) {
+      const name = String(t.Name ?? t.name ?? "").trim();
+      if (!name) continue;
+      map[name] = t;
+    }
+    const namesSorted = Object.keys(map).sort((a, b) =>
+      a.localeCompare(b, undefined, { sensitivity: "base" })
+    );
+    return { talentByName: map, talentNames: namesSorted };
+  }, []);
+
   // ---------- Add Talent modal state ----------
   const [addOpen, setAddOpen] = useState(false);
-  const [talentNames, setTalentNames] = useState<string[]>([]);
-  const [talentByName, setTalentByName] = useState<
-    Record<string, TalentRecord>
-  >({});
   const [selectedName, setSelectedName] = useState<string>("");
   const [selectedType, setSelectedType] = useState<"Main" | "Secondary">(
     "Main"
   );
 
-  const ensureTalentsLoaded = async () => {
-    if (talentNames.length > 0) return;
-    try {
-      const data = await loadJson<unknown>("talents.json");
-      const arr = Array.isArray(data) ? (data as any[]) : [];
-      const normalized: TalentRecord[] = arr
-        .map((x) => (typeof x === "object" && x ? x : {}))
-        .map((r) => {
-          // normalize primary name key
-          if (!r["Name"] && (r as any)["name"]) r["Name"] = (r as any)["name"];
-          return r as TalentRecord;
-        })
-        .filter((r) => r["Name"]);
-
-      const map: Record<string, TalentRecord> = {};
-      normalized.forEach((r) => {
-        map[r["Name"]] = r;
-      });
-
-      // default sort by Name
-      const namesSorted = Object.keys(map).sort((a, b) =>
-        a.localeCompare(b, undefined, { sensitivity: "base" })
-      );
-
-      setTalentByName(map);
-      setTalentNames(namesSorted);
-    } catch (e) {
-      console.warn("Failed to load talents.json from /public/data.", e);
-      setTalentByName({});
-      setTalentNames([]);
-    }
-  };
-
-  const openAddModal = async () => {
-    await ensureTalentsLoaded();
-    setSelectedType("Main"); // no filter by default
-    setSelectedName(""); // clear selection
+  const openAddModal = () => {
+    setSelectedType("Main");
+    setSelectedName("");
     setAddOpen(true);
   };
 
@@ -133,10 +108,9 @@ export function TalentsGrid({
     onChange([...(rows || []), next]);
     setAddOpen(false);
   };
-
   const onCancelAdd = () => setAddOpen(false);
 
-  // ---------- DnD for table ----------
+  // ---------- DnD ----------
   const onDragStart = (idx: number, e: React.DragEvent<HTMLSpanElement>) => {
     dragIndexRef.current = idx;
     e.dataTransfer.setData("text/plain", String(idx));
@@ -161,11 +135,11 @@ export function TalentsGrid({
   };
 
   // ---------- Filtered list for modal ----------
-  const filteredNames = talentNames.filter((n) =>
-    matchesType(talentByName[n], selectedType)
+  const filteredNames = useMemo(
+    () => talentNames.filter((n) => matchesType(talentByName[n], selectedType)),
+    [talentNames, talentByName, selectedType]
   );
 
-  // If current selection doesn't match new filter, clear it
   const onTypeChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const nextType = e.target.value as "Main" | "Secondary";
     setSelectedType(nextType);
@@ -316,7 +290,7 @@ export function TalentsGrid({
                       >
                         {f}
                       </div>
-                      <div>{lines(v)}</div>
+                      <div>{lines(String(v))}</div>
                     </div>
                   );
                 })}

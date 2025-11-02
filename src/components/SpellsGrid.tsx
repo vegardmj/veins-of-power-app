@@ -1,13 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import type { SpellRow } from "../types";
 import { Input, th, td } from "./UI";
 import { InfoModal } from "./InfoModal";
-import { loadJson } from "../api/client";
 import { lines } from "../utils/text";
+import { spells as catalogSpells } from "../models/catalog";
 
 const NARROW = 110;
-
-type SpellRecord = Record<string, string>;
+type SpellRecord = Record<string, any>;
 
 const INFO_FIELDS = [
   "Ability",
@@ -33,12 +32,14 @@ const emptySpell = (): SpellRow => ({
 
 // --- helpers for sorting + labels ---
 function parseMana(rec: SpellRecord): number {
-  const raw = (rec["Mana"] ?? "").toString().trim();
+  const raw = String(rec["Mana"] ?? "").trim();
   const n = parseInt(raw, 10);
   return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY; // unknown mana goes last
 }
 function hasFocus(rec: SpellRecord): boolean {
-  const raw = (rec["Focus"] ?? "").toString().trim().toLowerCase();
+  const raw = String(rec["Focus"] ?? "")
+    .trim()
+    .toLowerCase();
   return raw === "yes" || raw === "y" || raw === "true" || raw === "1";
 }
 function optionLabel(rec: SpellRecord): string {
@@ -55,18 +56,16 @@ function normalize(s: string) {
 }
 
 function spellMatches(
-  rec: Record<string, string>,
+  rec: SpellRecord,
   ability: string,
   domain: string
 ): boolean {
   const a = normalize(ability);
   const d = normalize(domain);
-
-  // No filters -> show all
   if (!a && !d) return true;
 
   const recAbility = normalize(rec["Ability"] || "");
-  const recDomains = (rec["Domain"] || "")
+  const recDomains = String(rec["Domain"] || "")
     .split(",")
     .map((x) => normalize(x))
     .filter(Boolean);
@@ -74,7 +73,7 @@ function spellMatches(
   const abilityOk = a ? recAbility === a : false;
   const domainOk = d ? recDomains.includes(d) : false;
 
-  // OR logic
+  // OR logic (keep your behavior)
   return abilityOk || domainOk;
 }
 
@@ -121,54 +120,31 @@ export function SpellsGrid({
     onChange(copy);
   };
 
+  // ---------- Build catalog maps (once) ----------
+  const { spellByName, spellNames } = useMemo(() => {
+    const map: Record<string, SpellRecord> = {};
+    for (const s of catalogSpells) {
+      const name = String(s.Name ?? s.name ?? "").trim();
+      if (!name) continue;
+      map[name] = s;
+    }
+    // Sort names by: Mana asc, then Name asc
+    const namesSorted = Object.keys(map).sort((a, b) => {
+      const ra = map[a],
+        rb = map[b];
+      const ma = parseMana(ra),
+        mb = parseMana(rb);
+      if (ma !== mb) return ma - mb;
+      return a.localeCompare(b, undefined, { sensitivity: "base" });
+    });
+    return { spellByName: map, spellNames: namesSorted };
+  }, []);
+
   // ---------- Add Spell modal ----------
   const [addOpen, setAddOpen] = useState(false);
-  const [spellNames, setSpellNames] = useState<string[]>([]);
-  const [spellByName, setSpellByName] = useState<Record<string, SpellRecord>>(
-    {}
-  );
   const [selectedName, setSelectedName] = useState("");
 
-  const ensureSpellsLoaded = async () => {
-    if (spellNames.length > 0) return;
-    try {
-      const data = await loadJson<unknown>("spells.json");
-      const arr = Array.isArray(data) ? (data as any[]) : [];
-      const normalized: SpellRecord[] = arr
-        .map((x) => (typeof x === "object" && x ? x : {}))
-        .map((r) => {
-          if (!r["Name"] && (r as any)["name"]) r["Name"] = (r as any)["name"];
-          return r as SpellRecord;
-        })
-        .filter((r) => r["Name"]);
-
-      // Build map first
-      const map: Record<string, SpellRecord> = {};
-      normalized.forEach((r) => {
-        map[r["Name"]] = r;
-      });
-
-      // Sort names by: Mana asc, then Name asc
-      const namesSorted = Object.keys(map).sort((a, b) => {
-        const ra = map[a],
-          rb = map[b];
-        const ma = parseMana(ra),
-          mb = parseMana(rb);
-        if (ma !== mb) return ma - mb;
-        return a.localeCompare(b, undefined, { sensitivity: "base" });
-      });
-
-      setSpellByName(map);
-      setSpellNames(namesSorted);
-    } catch (e) {
-      console.warn("Failed to load spells.json from /public/data.", e);
-      setSpellByName({});
-      setSpellNames([]);
-    }
-  };
-
-  const openAddModal = async () => {
-    await ensureSpellsLoaded();
+  const openAddModal = () => {
     setSelectedName("");
     setAddOpen(true);
   };
@@ -376,7 +352,7 @@ export function SpellsGrid({
                       >
                         {f}
                       </div>
-                      <div>{lines(v)}</div>
+                      <div>{lines(String(v))}</div>
                     </div>
                   );
                 })}
