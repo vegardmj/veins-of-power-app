@@ -60,8 +60,13 @@ export function TalentsGrid({
   // Grid columns
   const columns: ColumnDef<TalentRow>[] = [
     { key: "name", header: "Name" },
-    { key: "action", header: "Action", width: FIELD_W },
-    { key: "description", header: "Description" },
+    { key: "action", header: "Action", width: 120 },
+    {
+      key: "description",
+      header: "Description",
+      inputType: "textarea",
+      textareaRows: 3,
+    },
   ];
 
   // Table filter
