@@ -111,13 +111,6 @@ export function SpellsGrid({
   filterAbility?: string; // "Int" | "Con" | "Cha" | ""
   filterDomain?: string; // one of your DOMAINS or ""
 }) {
-  // Ensure some rows exist
-  useEffect(() => {
-    if (!rows || rows.length === 0)
-      onChange([emptySpell(), emptySpell(), emptySpell()]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rows]);
-
   // DnD state
   const [overIndex, setOverIndex] = useState<number | null>(null);
   const dragIndexRef = useRef<number | null>(null);

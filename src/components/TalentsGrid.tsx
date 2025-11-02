@@ -50,13 +50,6 @@ export function TalentsGrid({
   rows: TalentRow[];
   onChange: (r: TalentRow[]) => void;
 }) {
-  // ensure some rows exist if empty
-  useEffect(() => {
-    if (!rows || rows.length === 0)
-      onChange([emptyTalent(), emptyTalent(), emptyTalent()]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rows]);
-
   const [overIndex, setOverIndex] = useState<number | null>(null);
   const dragIndexRef = useRef<number | null>(null);
 
