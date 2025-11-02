@@ -1,0 +1,152 @@
+[
+  {
+    "Name": "Quilted Jacket",
+    "AC bonus": "1",
+    "Cost (GP)": "5",
+    "Penalty": "Takes 3 more fire damage",
+    "Property": "gap",
+    "Requirements": "",
+    "Starting?": "Yes",
+    "Type": "Light"
+  },
+  {
+    "Name": "Hardened Leather",
+    "AC bonus": "2",
+    "Cost (GP)": "25",
+    "Penalty": "",
+    "Property": "",
+    "Requirements": "",
+    "Starting?": "No",
+    "Type": "Light"
+  },
+  {
+    "Name": "Hide Armor",
+    "AC bonus": "3",
+    "Cost (GP)": "15",
+    "Penalty": "-3 to Stealth",
+    "Property": "",
+    "Requirements": "11 Phy",
+    "Starting?": "Yes",
+    "Type": "Medium"
+  },
+  {
+    "Name": "Half Plate",
+    "AC bonus": "7",
+    "Cost (GP)": "200",
+    "Penalty": "-5ft movement speed, -3 to Stealth",
+    "Property": "plate, gap",
+    "Requirements": "15 Phy",
+    "Starting?": "No",
+    "Type": "Heavy"
+  },
+  {
+    "Name": "Brigandine",
+    "AC bonus": "5",
+    "Cost (GP)": "75",
+    "Penalty": "-3 to Stealth",
+    "Property": "gap",
+    "Requirements": "13 Phy",
+    "Starting?": "No",
+    "Type": "Medium"
+  },
+  {
+    "Name": "Full Plate",
+    "AC bonus": "8",
+    "Cost (GP)": "1500",
+    "Penalty": "-10ft movement speed, -3 to Stealth",
+    "Property": "plate",
+    "Requirements": "15 Phy",
+    "Starting?": "No",
+    "Type": "Heavy"
+  },
+  {
+    "Name": "Leather Jerkin",
+    "AC bonus": "1",
+    "Cost (GP)": "10",
+    "Penalty": "",
+    "Property": "",
+    "Requirements": "",
+    "Starting?": "Yes",
+    "Type": "Light"
+  },
+  {
+    "Name": "Lamellar Armor",
+    "AC bonus": "3",
+    "Cost (GP)": "40",
+    "Penalty": "-3 to Stealth",
+    "Property": "gap",
+    "Requirements": "11 Phy",
+    "Starting?": "Yes",
+    "Type": "Medium"
+  },
+  {
+    "Name": "Full Chain Hauberk",
+    "AC bonus": "6",
+    "Cost (GP)": "120",
+    "Penalty": "-5ft movement speed, -3 to Stealth",
+    "Property": "gap",
+    "Requirements": "13 Phy",
+    "Starting?": "Yes",
+    "Type": "Heavy"
+  },
+  {
+    "Name": "Breastplate / Cuirass",
+    "AC bonus": "4",
+    "Cost (GP)": "100",
+    "Penalty": "-3 to Stealth",
+    "Property": "plate",
+    "Requirements": "13 Phy",
+    "Starting?": "No",
+    "Type": "Medium"
+  },
+  {
+    "Name": "Mail Hauberk",
+    "AC bonus": "4",
+    "Cost (GP)": "50",
+    "Penalty": "-3 to Stealth",
+    "Property": "gap",
+    "Requirements": "11 Phy",
+    "Starting?": "No",
+    "Type": "Medium"
+  },
+  {
+    "Name": "Buckler",
+    "AC bonus": "1",
+    "Cost (GP)": "10",
+    "Penalty": "",
+    "Property": "",
+    "Requirements": "",
+    "Starting?": "Yes",
+    "Type": "Shield"
+  },
+  {
+    "Name": "Round Shield",
+    "AC bonus": "2",
+    "Cost (GP)": "25",
+    "Penalty": "",
+    "Property": "",
+    "Requirements": "Phy 13",
+    "Starting?": "Yes",
+    "Type": "Shield"
+  },
+  {
+    "Name": "Kite Shield",
+    "AC bonus": "2",
+    "Cost (GP)": "35",
+    "Penalty": "",
+    "Property": "",
+    "Requirements": "Phy 13",
+    "Starting?": "No",
+    "Type": "Shield"
+  },
+  {
+    "Name": "Tower Shield",
+    "AC bonus": "3",
+    "Cost (GP)": "80",
+    "Penalty": "-10ft movement speed",
+    "Property": "",
+    "Requirements": "Phy 17",
+    "Starting?": "No",
+    "Type": "Shield"
+  }
+]

@@ -66,3 +66,13 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+@media print {
+  button,
+  input[type="file"],
+  header > *:not(h1) {
+    display: none !important;
+  }
+  main {
+    max-width: 100% !important;
+  }
+}

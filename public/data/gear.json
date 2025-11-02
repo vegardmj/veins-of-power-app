@@ -1,0 +1,37 @@
+[
+  {
+    "Name": "Sage Gear",
+    "Contents": "Books, Writing Kit, Lantern, Alchemy Kit",
+    "Skill Bonus": "+2 to History/Arcana"
+  },
+  {
+    "Name": "Traveler Gear (Base Gear)",
+    "Contents": "Bedroll, Waterskin, Rations (3), Backpack/Satchel",
+    "Skill Bonus": ""
+  },
+  {
+    "Name": "Priest Gear",
+    "Contents": "Holy symbol*, Prayer book, Candles, Matches, Healing Kit",
+    "Skill Bonus": "+2 to Medicine/Insight"
+  },
+  {
+    "Name": "Diplomat Gear",
+    "Contents": "Writing Kit, Envelopes, Signet seal & wax*, Fine Clothes",
+    "Skill Bonus": "+2 to Persuasion/Deception"
+  },
+  {
+    "Name": "Bard Gear",
+    "Contents": "Musical instrument, Costumes & Makeup, Fine Clothes, Writing Kit, Small mirror",
+    "Skill Bonus": "+2 to Performance/Deception"
+  },
+  {
+    "Name": "Thief Gear",
+    "Contents": "Lockpicks, Crowbar, Cloak & Hood, Chalk, Rope, Grapling Hook",
+    "Skill Bonus": "+2 to Stealth/Sleight of Hand"
+  },
+  {
+    "Name": "Hunter Gear",
+    "Contents": "Hunting Trap, Rope, Torch, Flint & Steel, Healing Kit, Cooks utensils",
+    "Skill Bonus": "+2 to Survival/Medicine"
+  }
+]

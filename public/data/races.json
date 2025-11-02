@@ -1,0 +1,98 @@
+[
+  {
+    "Name": "Halfling",
+    "Ability Score": "+1 Agi\n+1 Con\n+1 Cha\n-1 Phy",
+    "Demographics": "3",
+    "Description": "Cheerful wanderers who value hearth and home.",
+    "Hit Point Die": "1d6",
+    "Mana": "1d10",
+    "Race Talents": "258873e6-66a0-8082-b07f-d3dce5413803, 258873e6-66a0-80df-b476-ea5c13ffc32e, 258873e6-66a0-80b8-972b-e5efe353af84",
+    "Size": "Small",
+    "Speed": "25ft",
+    "Talents": "Thick Skin, Alert, Second Chance"
+  },
+  {
+    "Name": "Half-Elf",
+    "Ability Score": "+1 Agi\n+1 Con\n+1 Cha\n-1 Phy",
+    "Demographics": "4",
+    "Description": "Born diplomats, bridging the gap between humans and elves.",
+    "Hit Point Die": "1d8",
+    "Mana": "1d8",
+    "Race Talents": "258873e6-66a0-8061-89d4-d77876d76b57, 258873e6-66a0-80df-b476-ea5c13ffc32e, 258873e6-66a0-80b8-972b-e5efe353af84",
+    "Size": "Medium",
+    "Speed": "30ft",
+    "Talents": "Arcane Veins, Alert, Second Chance"
+  },
+  {
+    "Name": "Half-Giant",
+    "Ability Score": "+2 Phy\n+1 Con\n-1 Agi",
+    "Demographics": "12",
+    "Description": "Nomadic titans, the children of giants and mortals.",
+    "Hit Point Die": "1d12",
+    "Mana": "1d4",
+    "Race Talents": "258873e6-66a0-8082-b07f-d3dce5413803, 258873e6-66a0-804c-bd03-fa82458c105b, 258873e6-66a0-8059-84f3-e4b8b9a539ff",
+    "Size": "Medium-Large",
+    "Speed": "25ft",
+    "Talents": "Thick Skin, Tough, Savage Attacker"
+  },
+  {
+    "Name": "Dwarf",
+    "Ability Score": "+1 Phy\n+1 Agi\n+1 Con\n-1 Cha",
+    "Demographics": "10",
+    "Description": "Masters of stone and steel, unyielding in work and war.",
+    "Hit Point Die": "1d10",
+    "Mana": "1d6",
+    "Race Talents": "258873e6-66a0-8082-b07f-d3dce5413803, 258873e6-66a0-804c-bd03-fa82458c105b, 258873e6-66a0-806b-8573-c5f1f91d1b9c",
+    "Size": "Medium",
+    "Speed": "25ft",
+    "Talents": "Thick Skin, Tough, Darkvision"
+  },
+  {
+    "Name": "Half-Orc",
+    "Ability Score": "+1 Phy\n+1 Agi\n+1 Con\n-1 Int",
+    "Demographics": "11",
+    "Description": "Fierce warriors born of two worlds, respected and feared.",
+    "Hit Point Die": "1d10",
+    "Mana": "1d6",
+    "Race Talents": "258873e6-66a0-8061-89d4-d77876d76b57, 258873e6-66a0-804c-bd03-fa82458c105b, 258873e6-66a0-8059-84f3-e4b8b9a539ff",
+    "Size": "Medium",
+    "Speed": "30ft",
+    "Talents": "Arcane Veins, Tough, Savage Attacker"
+  },
+  {
+    "Name": "Human",
+    "Ability Score": "+2 to an ability of your choice, +1 to another ability of your choice\n-1 to an ability of your choice",
+    "Demographics": "6-9",
+    "Description": "Restless innovators, always building, trading, or conquering",
+    "Hit Point Die": "1d8",
+    "Mana": "1d8",
+    "Race Talents": "258873e6-66a0-8082-b07f-d3dce5413803, 258873e6-66a0-8061-89d4-d77876d76b57, 258873e6-66a0-804c-bd03-fa82458c105b",
+    "Size": "Medium",
+    "Speed": "30ft",
+    "Talents": "Thick Skin, Arcane Veins, Tough"
+  },
+  {
+    "Name": "Gnome",
+    "Ability Score": "+2 Int\n+1 Con\n-1 Phy",
+    "Demographics": "2",
+    "Description": "Whimsical tinkerers and clever storytellers.",
+    "Hit Point Die": "1d6",
+    "Mana": "1d12",
+    "Race Talents": "258873e6-66a0-8061-89d4-d77876d76b57, 258873e6-66a0-806b-8573-c5f1f91d1b9c, 258873e6-66a0-80b8-972b-e5efe353af84",
+    "Size": "Small",
+    "Speed": "20ft",
+    "Talents": "Arcane Veins, Darkvision, Second Chance"
+  },
+  {
+    "Name": "Elf",
+    "Ability Score": "+1 Agi\n+1 Int\n+1 Con\n-1 Phy",
+    "Demographics": "5",
+    "Description": "Ancient forest-dwellers with deep ties to magic and beauty.",
+    "Hit Point Die": "1d6",
+    "Mana": "1d10",
+    "Race Talents": "258873e6-66a0-8061-89d4-d77876d76b57, 258873e6-66a0-806b-8573-c5f1f91d1b9c, 258873e6-66a0-80df-b476-ea5c13ffc32e",
+    "Size": "Medium",
+    "Speed": "35ft",
+    "Talents": "Arcane Veins, Darkvision, Alert"
+  }
+]
