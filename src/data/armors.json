@@ -7,7 +7,8 @@
     "Property": "gap",
     "Requirements": "",
     "Starting?": "Yes",
-    "Type": "Light"
+    "Type": "Light",
+    "Versions": ""
   },
   {
     "Name": "Hardened Leather",
@@ -17,7 +18,8 @@
     "Property": "",
     "Requirements": "",
     "Starting?": "No",
-    "Type": "Light"
+    "Type": "Light",
+    "Versions": "1.0"
   },
   {
     "Name": "Hide Armor",
@@ -27,7 +29,8 @@
     "Property": "",
     "Requirements": "11 Phy",
     "Starting?": "Yes",
-    "Type": "Medium"
+    "Type": "Medium",
+    "Versions": "1.0"
   },
   {
     "Name": "Half Plate",
@@ -37,7 +40,8 @@
     "Property": "plate, gap",
     "Requirements": "15 Phy",
     "Starting?": "No",
-    "Type": "Heavy"
+    "Type": "Heavy",
+    "Versions": "1.0"
   },
   {
     "Name": "Brigandine",
@@ -47,7 +51,8 @@
     "Property": "gap",
     "Requirements": "13 Phy",
     "Starting?": "No",
-    "Type": "Medium"
+    "Type": "Medium",
+    "Versions": ""
   },
   {
     "Name": "Full Plate",
@@ -57,7 +62,8 @@
     "Property": "plate",
     "Requirements": "15 Phy",
     "Starting?": "No",
-    "Type": "Heavy"
+    "Type": "Heavy",
+    "Versions": ""
   },
   {
     "Name": "Leather Jerkin",
@@ -67,7 +73,8 @@
     "Property": "",
     "Requirements": "",
     "Starting?": "Yes",
-    "Type": "Light"
+    "Type": "Light",
+    "Versions": "1.0"
   },
   {
     "Name": "Lamellar Armor",
@@ -77,7 +84,8 @@
     "Property": "gap",
     "Requirements": "11 Phy",
     "Starting?": "Yes",
-    "Type": "Medium"
+    "Type": "Medium",
+    "Versions": ""
   },
   {
     "Name": "Full Chain Hauberk",
@@ -87,7 +95,8 @@
     "Property": "gap",
     "Requirements": "13 Phy",
     "Starting?": "Yes",
-    "Type": "Heavy"
+    "Type": "Heavy",
+    "Versions": "1.0"
   },
   {
     "Name": "Breastplate / Cuirass",
@@ -97,7 +106,8 @@
     "Property": "plate",
     "Requirements": "13 Phy",
     "Starting?": "No",
-    "Type": "Medium"
+    "Type": "Medium",
+    "Versions": "1.0"
   },
   {
     "Name": "Mail Hauberk",
@@ -107,7 +117,8 @@
     "Property": "gap",
     "Requirements": "11 Phy",
     "Starting?": "No",
-    "Type": "Medium"
+    "Type": "Medium",
+    "Versions": ""
   },
   {
     "Name": "Buckler",
@@ -117,7 +128,8 @@
     "Property": "",
     "Requirements": "",
     "Starting?": "Yes",
-    "Type": "Shield"
+    "Type": "Shield",
+    "Versions": "1.0"
   },
   {
     "Name": "Round Shield",
@@ -127,7 +139,8 @@
     "Property": "",
     "Requirements": "Phy 13",
     "Starting?": "Yes",
-    "Type": "Shield"
+    "Type": "Shield",
+    "Versions": "1.0"
   },
   {
     "Name": "Kite Shield",
@@ -137,7 +150,8 @@
     "Property": "",
     "Requirements": "Phy 13",
     "Starting?": "No",
-    "Type": "Shield"
+    "Type": "Shield",
+    "Versions": ""
   },
   {
     "Name": "Tower Shield",
@@ -147,6 +161,7 @@
     "Property": "",
     "Requirements": "Phy 17",
     "Starting?": "No",
-    "Type": "Shield"
+    "Type": "Shield",
+    "Versions": "1.0"
   }
 ]

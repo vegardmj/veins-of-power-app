@@ -9,6 +9,7 @@
     "Starting?": "No",
     "Stock mod.": "5",
     "Type": "Reach, Axe, Spear, heavy",
+    "Versions": "",
     "dmg": "1d10 Piercing or 1d10 slashing"
   },
   {
@@ -21,6 +22,7 @@
     "Starting?": "No",
     "Stock mod.": "5",
     "Type": "Sword",
+    "Versions": "",
     "dmg": "1d8 Slashing"
   },
   {
@@ -33,6 +35,7 @@
     "Starting?": "Yes",
     "Stock mod.": "0",
     "Type": "Thrown, Axe",
+    "Versions": "1.0",
     "dmg": "1d6 slashing"
   },
   {
@@ -45,6 +48,7 @@
     "Starting?": "No",
     "Stock mod.": "5",
     "Type": "Sword, heavy",
+    "Versions": "1.0",
     "dmg": "1d12 Slashing or 1d10 piercing"
   },
   {
@@ -57,6 +61,7 @@
     "Starting?": "Yes",
     "Stock mod.": "2",
     "Type": "Sword",
+    "Versions": "1.0",
     "dmg": "1d6 piercing or 1d6 slashing"
   },
   {
@@ -69,6 +74,7 @@
     "Starting?": "No",
     "Stock mod.": "5",
     "Type": "Mace, heavy",
+    "Versions": "1.0",
     "dmg": "1d12 bludgeoning"
   },
   {
@@ -81,6 +87,7 @@
     "Starting?": "No",
     "Stock mod.": "5",
     "Type": "Mace",
+    "Versions": "",
     "dmg": "1d6 bludgeoning + 1d6 piecing"
   },
   {
@@ -93,6 +100,7 @@
     "Starting?": "Yes",
     "Stock mod.": "4",
     "Type": "Crossbow",
+    "Versions": "1.0",
     "dmg": "1d8 piercing"
   },
   {
@@ -105,6 +113,7 @@
     "Starting?": "No",
     "Stock mod.": "0",
     "Type": "Mace",
+    "Versions": "1.0",
     "dmg": "1d4 bludgeoning"
   },
   {
@@ -117,6 +126,7 @@
     "Starting?": "Yes",
     "Stock mod.": "0",
     "Type": "Bow",
+    "Versions": "1.0",
     "dmg": "1d6 piercing"
   },
   {
@@ -129,6 +139,7 @@
     "Starting?": "Yes",
     "Stock mod.": "2",
     "Type": "Reach, Spear",
+    "Versions": "1.0",
     "dmg": "1d6 piercing"
   },
   {
@@ -141,6 +152,7 @@
     "Starting?": "Yes",
     "Stock mod.": "0",
     "Type": "Dagger, Thrown",
+    "Versions": "1.0",
     "dmg": "1d4 piercing"
   },
   {
@@ -153,6 +165,7 @@
     "Starting?": "No",
     "Stock mod.": "6",
     "Type": "Dagger",
+    "Versions": "",
     "dmg": "1d6 piercing"
   },
   {
@@ -165,6 +178,7 @@
     "Starting?": "Yes",
     "Stock mod.": "2",
     "Type": "Mace",
+    "Versions": "1.0",
     "dmg": "1d8 bludgeoning"
   },
   {
@@ -177,6 +191,7 @@
     "Starting?": "Yes",
     "Stock mod.": "4",
     "Type": "Axe",
+    "Versions": "1.0",
     "dmg": "1d8 slashing"
   },
   {
@@ -189,6 +204,7 @@
     "Starting?": "No",
     "Stock mod.": "4",
     "Type": "Sword",
+    "Versions": "1.0",
     "dmg": "1d10 slashing or 1d8 piercing"
   },
   {
@@ -201,6 +217,7 @@
     "Starting?": "Yes",
     "Stock mod.": "5",
     "Type": "Axe, heavy",
+    "Versions": "1.0",
     "dmg": "1d12 slashing"
   },
   {
@@ -213,6 +230,7 @@
     "Starting?": "No",
     "Stock mod.": "2",
     "Type": "Sword",
+    "Versions": "1.0",
     "dmg": "1d6 Slashing or 1d4 piercing"
   },
   {
@@ -225,6 +243,7 @@
     "Starting?": "No",
     "Stock mod.": "5",
     "Type": "Bow",
+    "Versions": "",
     "dmg": "1d8 piercing"
   },
   {
@@ -237,6 +256,7 @@
     "Starting?": "No",
     "Stock mod.": "8",
     "Type": "Crossbow",
+    "Versions": "1.0",
     "dmg": "1d12 piercing"
   },
   {
@@ -249,6 +269,7 @@
     "Starting?": "No",
     "Stock mod.": "5",
     "Type": "Reach, Spear",
+    "Versions": "1.0",
     "dmg": "1d8 Piercing"
   },
   {
@@ -261,6 +282,7 @@
     "Starting?": "Yes",
     "Stock mod.": "2",
     "Type": "Thrown, Spear",
+    "Versions": "1.0",
     "dmg": "1d6 piercing"
   },
   {
@@ -273,6 +295,7 @@
     "Starting?": "Yes",
     "Stock mod.": "4",
     "Type": "Mace",
+    "Versions": "1.0",
     "dmg": "1d8 bludgeoning or 1d6 piercing"
   },
   {
@@ -285,6 +308,7 @@
     "Starting?": "Yes",
     "Stock mod.": "3",
     "Type": "Bow",
+    "Versions": "1.0",
     "dmg": "1d8 piercing"
   },
   {
@@ -297,6 +321,7 @@
     "Starting?": "No",
     "Stock mod.": "4",
     "Type": "Axe",
+    "Versions": "1.0",
     "dmg": "1d10 slashing"
   },
   {
@@ -309,6 +334,7 @@
     "Starting?": "No",
     "Stock mod.": "8",
     "Type": "Sword, heavy",
+    "Versions": "",
     "dmg": "1d10 slashing"
   },
   {
@@ -321,6 +347,7 @@
     "Starting?": "No",
     "Stock mod.": "5",
     "Type": "Reach, Sword, Spear, heavy",
+    "Versions": "",
     "dmg": "1d10 Piercing or 1d10 slashing"
   },
   {
@@ -333,6 +360,7 @@
     "Starting?": "No",
     "Stock mod.": "8",
     "Type": "Dagger",
+    "Versions": "",
     "dmg": "1d6 piercing"
   },
   {
@@ -345,6 +373,7 @@
     "Starting?": "No",
     "Stock mod.": "8",
     "Type": "Sword, Axe",
+    "Versions": "",
     "dmg": "1d6 slashing"
   },
   {
@@ -357,6 +386,7 @@
     "Starting?": "No",
     "Stock mod.": "8",
     "Type": "Reach, Spear",
+    "Versions": "",
     "dmg": "1d8 piercing"
   },
   {
@@ -369,6 +399,7 @@
     "Starting?": "No",
     "Stock mod.": "5",
     "Type": "Axe",
+    "Versions": "",
     "dmg": "1d10 slashing"
   },
   {
@@ -381,6 +412,7 @@
     "Starting?": "No",
     "Stock mod.": "4",
     "Type": "Sword",
+    "Versions": "",
     "dmg": "1d6 piercing or 1d4 slashing"
   },
   {
@@ -393,6 +425,7 @@
     "Starting?": "No",
     "Stock mod.": "5",
     "Type": "Sword",
+    "Versions": "",
     "dmg": "1d10 slashing or 1d8 piercing"
   },
   {
@@ -405,6 +438,7 @@
     "Starting?": "Yes",
     "Stock mod.": "2",
     "Type": "Reach, Axe, Spear, heavy",
+    "Versions": "1.0",
     "dmg": "1d8 Piercing or 1d10 slashing"
   },
   {
@@ -417,6 +451,7 @@
     "Starting?": "No",
     "Stock mod.": "2",
     "Type": "Reach, Spear, heavy",
+    "Versions": "",
     "dmg": "1d8 piercing"
   },
   {
@@ -429,6 +464,7 @@
     "Starting?": "No",
     "Stock mod.": "8",
     "Type": "Sword",
+    "Versions": "",
     "dmg": "1d6 slashing"
   },
   {
@@ -441,6 +477,7 @@
     "Starting?": "No",
     "Stock mod.": "5",
     "Type": "Mace",
+    "Versions": "",
     "dmg": "1d4 bludgeoning + 1d4 piecing"
   },
   {
@@ -453,6 +490,7 @@
     "Starting?": "No",
     "Stock mod.": "4",
     "Type": "Sword",
+    "Versions": "1.0",
     "dmg": "1d8 slashing or 1d6 piercing"
   },
   {
@@ -465,6 +503,7 @@
     "Starting?": "No",
     "Stock mod.": "8",
     "Type": "Sword",
+    "Versions": "",
     "dmg": "1d6 slashing or 1d6 piercing"
   },
   {
@@ -477,6 +516,7 @@
     "Starting?": "Yes",
     "Stock mod.": "2",
     "Type": "Sword",
+    "Versions": "1.0",
     "dmg": "1d8 slashing or 1d6 piercing "
   },
   {
@@ -489,6 +529,7 @@
     "Starting?": "Yes",
     "Stock mod.": "0",
     "Type": "Mace",
+    "Versions": "1.0",
     "dmg": "1d6 bludgeoning"
   },
   {
@@ -501,6 +542,7 @@
     "Starting?": "No",
     "Stock mod.": "0",
     "Type": "Sword",
+    "Versions": "",
     "dmg": "1d4 slashing"
   },
   {
@@ -513,6 +555,7 @@
     "Starting?": "No",
     "Stock mod.": "4",
     "Type": "Thrown",
+    "Versions": "",
     "dmg": "1d6 slashing"
   },
   {
@@ -525,6 +568,7 @@
     "Starting?": "No",
     "Stock mod.": "2",
     "Type": "Crossbow",
+    "Versions": "1.0",
     "dmg": "1d4 piercing "
   },
   {
@@ -537,6 +581,7 @@
     "Starting?": "No",
     "Stock mod.": "8",
     "Type": "Mace, heavy",
+    "Versions": "",
     "dmg": "2d8"
   },
   {
@@ -549,6 +594,7 @@
     "Starting?": "No",
     "Stock mod.": "2",
     "Type": "Spear, Reach",
+    "Versions": "",
     "dmg": "1d6 piercing"
   },
   {
@@ -561,6 +607,7 @@
     "Starting?": "No",
     "Stock mod.": "8",
     "Type": "Bow",
+    "Versions": "",
     "dmg": "1d8 piercing"
   }
 ]
