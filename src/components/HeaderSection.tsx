@@ -120,7 +120,6 @@ export function HeaderSection({
         </div>
       </Col>
 
-      {/* ...rest unchanged... */}
       <Col span={3}>
         <Label>Level</Label>
         <Input
@@ -130,7 +129,103 @@ export function HeaderSection({
           style={narrowNumberStyle}
         />
       </Col>
-      {/* etc. */}
+      <Col span={3}>
+        <Label>Age</Label>
+        <Input
+          type="number"
+          value={ch.age}
+          onChange={(e) => onChange("age", Number(e.target.value) || "")}
+          style={narrowNumberStyle}
+        />
+      </Col>
+      <Col span={3}>
+        <Label>Speed</Label>
+        <Input
+          type="number"
+          value={ch.speed}
+          onChange={(e) => onChange("speed", Number(e.target.value) || "")}
+          style={narrowNumberStyle}
+        />
+      </Col>
+      <Col span={3}>
+        <Label>Gender</Label>
+        <Input
+          value={ch.gender}
+          onChange={(e) => onChange("gender", e.target.value)}
+          style={narrowNumberStyle}
+        />
+      </Col>
+
+      <Col span={3}>
+        <Label>Initiative</Label>
+        <Input
+          type="number"
+          value={ch.initiative}
+          onChange={(e) => onChange("initiative", Number(e.target.value) || "")}
+          style={narrowNumberStyle}
+        />
+      </Col>
+      <Col span={3}>
+        <Label>Armor Class</Label>
+        <Input
+          type="number"
+          value={ch.armorClass}
+          onChange={(e) => onChange("armorClass", Number(e.target.value) || "")}
+          style={narrowNumberStyle}
+        />
+      </Col>
+      <Col span={3}>
+        <Label>Occupation</Label>
+        <Input
+          value={ch.occupation}
+          onChange={(e) => onChange("occupation", e.target.value)}
+          style={narrowNumberStyle}
+        />
+      </Col>
+      <Col span={3}>
+        <Label>Patron</Label>
+        <Input
+          value={ch.patron}
+          onChange={(e) => onChange("patron", e.target.value)}
+          style={narrowNumberStyle}
+        />
+      </Col>
+      <Col span={2}>
+        <Label>Max HP</Label>
+        <Input
+          type="number"
+          value={ch.maxHP}
+          onChange={(e) => onChange("maxHP", Number(e.target.value) || "")}
+          // narrower
+          style={narrowNumberStyle}
+        />
+      </Col>
+      <Col span={9}>
+        <Label>Current HP</Label>
+        <Input
+          type="number"
+          value={ch.curHP}
+          onChange={(e) => onChange("curHP", Number(e.target.value) || "")}
+        />
+      </Col>
+      <Col span={2}>
+        <Label>Max Mana</Label>
+        <Input
+          type="number"
+          value={ch.maxMana}
+          onChange={(e) => onChange("maxMana", Number(e.target.value) || "")}
+          // narrower
+          style={narrowNumberStyle}
+        />
+      </Col>
+      <Col span={9}>
+        <Label>Current Mana</Label>
+        <Input
+          type="number"
+          value={ch.curMana}
+          onChange={(e) => onChange("curMana", Number(e.target.value) || "")}
+        />
+      </Col>
     </Row>
   );
 }

@@ -38,6 +38,12 @@ export default function App() {
   );
   const [autosave, setAutosave] = useState(true);
   const [raceModalOpen, setRaceModalOpen] = useState(false);
+  const [closePickerSignal, setClosePickerSignal] = useState(0);
+
+  const closeAllModals = () => {
+    setRaceModalOpen(false); // close the Race modal
+    setClosePickerSignal((n) => n + 1); // tell picker modals to close
+  };
 
   // Derived once from catalog
   const raceNames = raceNamesFromJson;
