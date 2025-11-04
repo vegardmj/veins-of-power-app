@@ -51,6 +51,11 @@ export const emptyCharacter = (): Character => ({
     damage: "",
     effect: "",
   })),
+  specials: Array.from({ length: 3 }, () => ({
+    ability: "",
+    damage: "",
+    effect: "",
+  })),
   spellMeta: {
     ability: "Int",
     domain: "",

@@ -104,6 +104,7 @@ export type Character = {
   actions: ActionRow[];
   supportActions: ActionRow[];
   reactions: { ability: string; effect: string }[];
+  specials: { ability: string; effect: string }[];
   spellMeta: {
     ability: AbilityKey;
     domain: string;

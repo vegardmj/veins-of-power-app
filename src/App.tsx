@@ -179,6 +179,12 @@ export default function App() {
           rows={ch.reactions}
           onChange={(r) => update("reactions", r)}
         />
+        <div style={{ height: 8 }} />
+        <label>Specials</label>
+        <ActionsGrid
+          rows={ch.specials}
+          onChange={(r) => update("specials", r)}
+        />
       </Section>
 
       <Section title="Talents">

@@ -213,3 +213,15 @@ export function ReactionsGrid({
     <EditableGrid rows={rows} onChange={onChange} addLabel="+ Add reaction" />
   );
 }
+
+export function SpecialsGrid({
+  rows,
+  onChange,
+}: {
+  rows: ActionRow[];
+  onChange: (r: ActionRow[]) => void;
+}) {
+  return (
+    <EditableGrid rows={rows} onChange={onChange} addLabel="+ Add special" />
+  );
+}
