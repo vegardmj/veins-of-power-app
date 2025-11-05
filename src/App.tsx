@@ -1,21 +1,9 @@
 import { useEffect, useState } from "react";
 import type { Character } from "./types";
-// import { TALENTS, DOMAINS } from "./constants"; // <- not used here
 import { InfoModal } from "./components/InfoModal";
 import { RaceInfo } from "./components/RaceInfo";
 import { emptyCharacter, loadCharacter, saveCharacter } from "./storage";
-import {
-  Section,
-  Row,
-  Col,
-  Label,
-  Input,
-  Select,
-  Textarea,
-  Button,
-  th,
-  td,
-} from "./components/UI";
+import { Section, Button } from "./components/UI";
 import { AbilityTable } from "./components/AbilityTable";
 import { SkillsGrid } from "./components/SkillsGrid";
 import { ActionsGrid } from "./components/ActionsGrid";
@@ -26,7 +14,6 @@ import { SpellcastingBlock } from "./components/SpellcastingBlock";
 import { WeaponsGrid } from "./components/WeaponsGrid";
 import { ArmorsGrid } from "./components/ArmorsGrid";
 
-// ✅ Centralized data (no fetch)
 import {
   raceByName as catalogRaceByName,
   raceNamesFromJson,
@@ -38,12 +25,6 @@ export default function App() {
   );
   const [autosave, setAutosave] = useState(true);
   const [raceModalOpen, setRaceModalOpen] = useState(false);
-  const [closePickerSignal, setClosePickerSignal] = useState(0);
-
-  const closeAllModals = () => {
-    setRaceModalOpen(false); // close the Race modal
-    setClosePickerSignal((n) => n + 1); // tell picker modals to close
-  };
 
   // Derived once from catalog
   const raceNames = raceNamesFromJson;
@@ -57,31 +38,6 @@ export default function App() {
 
   const reset = () => setCh(emptyCharacter());
 
-  const exportJson = () => {
-    const blob = new Blob([JSON.stringify(ch, null, 2)], {
-      type: "application/json",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${ch.name || "character"}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const importJson = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        setCh(JSON.parse(String(reader.result)));
-      } catch {
-        alert("Invalid JSON");
-      }
-    };
-    reader.readAsText(file);
-  };
-
-  // Convenience: current race name and record
   const currentRaceName = ch.raceTalent.split(" | ")[0] || "";
   const currentRaceRec = catalogRaceByName.get(currentRaceName) ?? null;
 
@@ -119,28 +75,6 @@ export default function App() {
             />{" "}
             Autosave
           </label>
-          {/* <Button onClick={exportJson}>Export JSON</Button>
-          <label style={{ cursor: "pointer" }}>
-            <input
-              type="file"
-              accept="application/json"
-              onChange={(e) => {
-                const f = e.target.files?.[0];
-                if (f) importJson(f);
-              }}
-              style={{ display: "none" }}
-            />
-            <span
-              style={{
-                padding: "8px 12px",
-                borderRadius: 8,
-                border: "1px solid #bbb",
-                background: "#f7f7f7",
-              }}
-            >
-              Import JSON
-            </span>
-          </label> */}
           <Button onClick={() => window.print()}>Print</Button>
           <Button onClick={reset}>New</Button>
         </div>
