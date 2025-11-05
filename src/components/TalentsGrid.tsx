@@ -6,7 +6,6 @@ import type { ColumnDef, PickerFilter } from "./GenericPickerGrid";
 import { talents as catalogTalents } from "../models/catalog";
 import { lines } from "../utils/text";
 
-const FIELD_W = 120;
 type TalentRecord = Record<string, any>;
 
 const norm = (s?: string) => (s ?? "").trim().toLowerCase();
@@ -238,7 +237,6 @@ export function TalentsGrid({
     // Patch is optional (e.g., keep a record of selected child names on the parent row)
     const getRowPatch = () =>
       ({
-        // @ts-expect-error extend row shape if desired
         childSelections: childChoices.filter(Boolean),
       }) as Partial<TalentRow>;
 

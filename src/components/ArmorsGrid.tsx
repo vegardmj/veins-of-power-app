@@ -1,9 +1,8 @@
 // src/components/ArmorsGrid.tsx
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { ArmorRow } from "../types";
 import { GenericPickerGrid } from "./GenericPickerGrid";
 import type { ColumnDef, PickerFilter } from "./GenericPickerGrid";
-import { lines } from "../utils/text";
 import { armors as catalogArmors } from "../models/catalog";
 
 type ArmorRecord = Record<string, any>;

@@ -115,7 +115,6 @@ export function GenericPickerGrid<TItem, TRow>({
 
   const setRowAt = (idx: number, patch: Partial<TRow>) => {
     const copy = [...rows];
-    // @ts-expect-error partial merge ok
     copy[idx] = { ...(copy[idx] as any), ...patch };
     onChange(copy);
   };
@@ -199,7 +198,6 @@ export function GenericPickerGrid<TItem, TRow>({
     const patch = extra?.getRowPatch?.() ?? {};
     const extraRows = extra?.getExtraRows?.() ?? [];
 
-    // @ts-expect-error patch widening ok
     const parentRow = { ...(baseRow as any), ...(patch as any) } as TRow;
 
     if (mode === "add") {
@@ -238,13 +236,6 @@ export function GenericPickerGrid<TItem, TRow>({
     arr.push(<th key="__actions" style={{ ...th, width: 36 }} />);
     return arr;
   }, [columns]);
-
-  // ---- Autosizing for textarea cells
-  const autoResize = (el: HTMLTextAreaElement | null) => {
-    if (!el) return;
-    el.style.height = "0px";
-    el.style.height = `${el.scrollHeight}px`;
-  };
 
   return (
     <>

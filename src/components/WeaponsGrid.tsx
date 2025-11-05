@@ -1,9 +1,8 @@
 // src/components/WeaponsGrid.tsx
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { WeaponRow } from "../types";
 import { GenericPickerGrid } from "./GenericPickerGrid";
 import type { ColumnDef, PickerFilter } from "./GenericPickerGrid";
-import { lines } from "../utils/text";
 import { weapons as catalogWeapons } from "../models/catalog";
 
 type WeaponRecord = Record<string, any>;

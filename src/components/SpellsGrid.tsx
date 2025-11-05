@@ -1,5 +1,5 @@
 // src/components/SpellsGrid.tsx
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import type { SpellRow } from "../types";
 import { GenericPickerGrid } from "./GenericPickerGrid";
 import type { ColumnDef, PickerFilter } from "./GenericPickerGrid";

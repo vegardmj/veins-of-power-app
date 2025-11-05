@@ -2,11 +2,7 @@
 import React from "react";
 import type { Character } from "../types";
 import { Row, Col, Label, Input, Select } from "./UI";
-import {
-  raceByName,
-  talentNameById,
-  getAllowedTalentNamesForRace,
-} from "../models/catalog";
+import { getAllowedTalentNamesForRace } from "../models/catalog";
 
 type Props = {
   ch: Character;
